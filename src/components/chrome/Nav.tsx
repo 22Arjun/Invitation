@@ -82,7 +82,7 @@ export function Nav() {
 
   return (
     <>
-      <header ref={header} className="nav">
+      <header ref={header} className="nav" data-theme="cream">
         <a href="#top" className="nav__logo" aria-label={`${t(COUPLE.groom.name)} & ${t(COUPLE.bride.name)}`}>
           <span>{t(COUPLE.groom.initial)}</span>
           <em>&amp;</em>

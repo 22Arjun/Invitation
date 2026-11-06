@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EVENTS, UI, VENUE, type WeddingEvent } from "@/content/wedding";
 import { useLang } from "@/lib/lang";
 import { Diya } from "@/components/ornaments/Diya";
@@ -71,6 +71,16 @@ function nextEvent(now: number): WeddingEvent | undefined {
 export function Countdown() {
   const { t } = useLang();
   const [now, setNow] = useState<number | null>(null);
+  const diyas = useRef<HTMLDivElement>(null);
+
+  // CSS flames keep GPU layers alive while running, so they only burn when the row is on screen.
+  useEffect(() => {
+    const el = diyas.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => el.classList.toggle("is-live", entry.isIntersecting), { rootMargin: "120px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const tick = () => setNow(Date.now());
@@ -127,7 +137,7 @@ export function Countdown() {
           <p className="countdown__next">{t(UI.countdown.marriedNote)}</p>
         )}
       </div>
-      <div className="countdown__diyas" aria-hidden="true">
+      <div ref={diyas} className="countdown__diyas" aria-hidden="true">
         {Array.from({ length: 9 }, (_, i) => (
           <Diya key={i} delay={(i * 0.37) % 1.3} className={i % 2 ? "diya--sm" : ""} />
         ))}

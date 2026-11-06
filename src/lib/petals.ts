@@ -23,6 +23,13 @@ let petals: Petal[] = [];
 let raf = 0;
 let dpr = 1;
 
+function resize() {
+  if (!canvas) return;
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+}
+
 function ensureCanvas() {
   if (canvas) return;
   canvas = document.createElement("canvas");
@@ -30,14 +37,16 @@ function ensureCanvas() {
   canvas.setAttribute("aria-hidden", "true");
   document.body.appendChild(canvas);
   ctx = canvas.getContext("2d");
-  const resize = () => {
-    if (!canvas) return;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-  };
   resize();
   window.addEventListener("resize", resize);
+}
+
+/** A full-screen canvas is a full-screen GPU layer, so it only exists while petals are in the air. */
+function removeCanvas() {
+  window.removeEventListener("resize", resize);
+  canvas?.remove();
+  canvas = null;
+  ctx = null;
 }
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
@@ -100,7 +109,7 @@ function tick(now: number) {
   if (petals.length) raf = requestAnimationFrame(tick);
   else {
     raf = 0;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    removeCanvas();
   }
 }
 

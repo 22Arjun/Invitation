@@ -19,7 +19,8 @@ export function Bokeh({ count = 46, className = "" }: { count?: number; classNam
     let h = 0;
     let raf = 0;
     let visible = true;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    // Soft glows gain nothing from retina resolution; 1× keeps the canvas cheap to upload each frame.
+    const dpr = 1;
     const lights: Light[] = [];
 
     const resize = () => {

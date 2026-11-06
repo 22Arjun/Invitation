@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${cormorant.variable} ${jost.variable} ${pinyon.variable} ${tiro.variable} is-locked`}>
-      <body data-theme="cream">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

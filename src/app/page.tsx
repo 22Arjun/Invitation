@@ -28,8 +28,6 @@ export default function Home() {
       <ArchDefs />
       <SmoothScroll />
       <Preloader />
-      <Cursor />
-      <ScrollProgress />
       <Nav />
       <main id="main">
         <Hero />
@@ -45,10 +43,12 @@ export default function Home() {
         <Rsvp />
       </main>
       <Footer />
+      {/* Decorative fixed layers sit after the content so they never force it onto extra GPU layers. */}
+      <ScrollProgress />
+      <Cursor />
       {/* Created last so every pinned section above is measured first. */}
       <Reveals />
       <ThemeController />
-      <div className="grain" aria-hidden="true" />
     </>
   );
 }

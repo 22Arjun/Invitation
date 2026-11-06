@@ -30,7 +30,7 @@ export function Marquee() {
         x += dir * 0.03 * boost;
         if (x <= -50) x += 50;
         if (x > 0) x -= 50;
-        gsap.set(track, { xPercent: x });
+        gsap.set(track, { xPercent: x, force3D: true });
         skew(gsap.utils.clamp(-9, 9, velocity / -280));
         velocity *= 0.92;
       };

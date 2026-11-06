@@ -10,20 +10,25 @@ const THEME_COLOR: Record<string, string> = {
   night: "#22060f",
 };
 
+/**
+ * Sections paint their own palettes, so only the fixed nav (and the browser's theme-color) needs to
+ * follow the section beneath it. Scoping the change to the nav keeps it to a tiny style update.
+ */
 export function setTheme(theme: string) {
-  if (document.body.dataset.theme === theme) return;
-  document.body.dataset.theme = theme;
+  const nav = document.querySelector<HTMLElement>(".nav");
+  if (!nav || nav.dataset.theme === theme) return;
+  nav.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", THEME_COLOR[theme] ?? THEME_COLOR.cream);
 }
 
-/** Cross-fades the page palette as each [data-theme] section crosses the middle of the viewport. */
+/** Switches the nav's palette as each [data-theme] section passes beneath it. */
 export function ThemeController() {
   useGSAP(() => {
     document.querySelectorAll<HTMLElement>("main [data-theme], footer[data-theme]").forEach((section) => {
       ScrollTrigger.create({
         trigger: section,
-        start: "top 55%",
-        end: "bottom 55%",
+        start: "top 48px",
+        end: "bottom 48px",
         onToggle: (self) => {
           if (self.isActive) setTheme(section.dataset.theme ?? "cream");
         },
