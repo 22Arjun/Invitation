@@ -170,7 +170,11 @@ export const VENUE = {
     en: "Hewatpura Road, Gandhi Nagar, Bhind (M.P.)",
     hi: "हेवतपुरा रोड, गाँधी नगर, भिंड (म.प्र.)",
   },
-  mapsQuery: "Banke Bihari Marriage Garden, Hewatpura Road, Gandhi Nagar, Bhind, Madhya Pradesh",
+  /** The family's own Google Maps link; Google lists the venue as "Shri Bankebihari Manglik Bhavan". */
+  mapsUrl: "https://maps.app.goo.gl/Bggw76jJhQWo3nLZ9",
+  /** The exact pin from that link, so the map and calendar never depend on a name search. */
+  lat: 26.5591906,
+  lng: 78.7678333,
 };
 
 const name = (en: string, hi: string): Text => ({ en, hi });
@@ -358,7 +362,7 @@ export const UI = {
       hi: "परिवार को अपने आगमन की सूचना दें। फ़ॉर्म भरते ही व्हाट्सऐप पर आपका संदेश तैयार मिलेगा।",
     },
     name: { en: "Your name(s)", hi: "आपका नाम" },
-    phone: { en: "Phone number", hi: "फ़ोन नंबर" },
+    phone: { en: "Mobile number", hi: "मोबाइल नंबर" },
     attending: { en: "Will you be there?", hi: "क्या आप पधारेंगे?" },
     yes: { en: "*Joyfully* attending", hi: "*अवश्य* पधारेंगे" },
     no: { en: "Sending *blessings* from afar", hi: "दूर से *आशीर्वाद*" },
@@ -370,7 +374,7 @@ export const UI = {
     optional: { en: "(optional)", hi: "(वैकल्पिक)" },
     submit: { en: "Send RSVP on WhatsApp", hi: "व्हाट्सऐप पर भेजें" },
     required: { en: "Please fill this in", hi: "कृपया यह भरें" },
-    phoneInvalid: { en: "Please enter a valid phone number", hi: "कृपया सही फ़ोन नंबर लिखें" },
+    phoneInvalid: { en: "Please enter your 10-digit mobile number", hi: "कृपया 10 अंकों का मोबाइल नंबर लिखें" },
     choose: { en: "Please choose one", hi: "कृपया एक विकल्प चुनें" },
     thanksTitleYes: { en: "Dhanyavaad, {name}!", hi: "धन्यवाद, {name}!" },
     thanksTitleNo: { en: "Thank you, {name}", hi: "धन्यवाद, {name}" },

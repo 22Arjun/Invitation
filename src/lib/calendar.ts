@@ -15,9 +15,15 @@ function buildIcs() {
       lines.push(`DTSTART;VALUE=DATE:${ymd(new Date(Date.UTC(y, m - 1, d)))}`, `DTEND;VALUE=DATE:${ymd(new Date(Date.UTC(y, m - 1, d + 1)))}`);
     } else {
       const end = new Date(new Date(e.start).getTime() + 6 * 3600_000).toISOString();
-      lines.push(`DTSTART:${icsDate(e.start)}`, `DTEND:${icsDate(end)}`, `LOCATION:${VENUE.name.en}\\, ${VENUE.address.en.replace(/,/g, "\\,")}`);
+      lines.push(
+        `DTSTART:${icsDate(e.start)}`,
+        `DTEND:${icsDate(end)}`,
+        `LOCATION:${VENUE.name.en}\\, ${VENUE.address.en.replace(/,/g, "\\,")}`,
+        `GEO:${VENUE.lat};${VENUE.lng}`,
+      );
     }
-    lines.push(`SUMMARY:${title} · Harshraj & Archana`, `DESCRIPTION:${e.description.en.replace(/,/g, "\\,")}`, "END:VEVENT");
+    const description = e.allDay ? e.description.en : `${e.description.en}\\n\\nMap: ${VENUE.mapsUrl}`;
+    lines.push(`SUMMARY:${title} · Harshraj & Archana`, `DESCRIPTION:${description.replace(/,/g, "\\,")}`, "END:VEVENT");
   }
   lines.push("END:VCALENDAR");
   return lines.join("\r\n");
@@ -40,6 +46,7 @@ export const GOOGLE_CALENDAR = `https://calendar.google.com/calendar/render?acti
   `${plain(first.title.en)} · Harshraj & Archana`,
 )}&dates=${icsDate(first.start)}/${icsDate(new Date(new Date(first.start).getTime() + 6 * 3600_000).toISOString())}&location=${encodeURIComponent(
   `${VENUE.name.en}, ${VENUE.address.en}`,
-)}&details=${encodeURIComponent(first.description.en)}`;
+)}&details=${encodeURIComponent(`${first.description.en}\n\nMap: ${VENUE.mapsUrl}`)}`;
 
-export const DIRECTIONS = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE.mapsQuery)}`;
+/** Opens the venue in Google Maps (the app on phones), one tap from turn-by-turn directions. */
+export const DIRECTIONS = VENUE.mapsUrl;

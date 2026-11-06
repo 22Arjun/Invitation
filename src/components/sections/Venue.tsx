@@ -8,7 +8,7 @@ import { Mandala } from "@/components/ornaments/Mandala";
 import { Split } from "@/components/ornaments/Split";
 import { ArchOutline } from "./ArchOutline";
 
-const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(VENUE.mapsQuery)}&z=15&output=embed`;
+const MAP_EMBED = `https://www.google.com/maps?q=${VENUE.lat},${VENUE.lng}&z=16&output=embed`;
 
 export function Venue() {
   const { t } = useLang();

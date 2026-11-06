@@ -15,6 +15,14 @@ type Form = { name: string; phone: string; attending: Attending; guests: number;
 type Errors = Partial<Record<"name" | "phone" | "attending", string>>;
 
 const EMPTY: Form = { name: "", phone: "", attending: "", guests: 1, events: EVENTS.map((e) => e.id), message: "" };
+
+/** Keeps the 10-digit Indian mobile number, whatever was typed, pasted or autofilled ("+91 98765-43210", "098765…"). */
+function toMobile(raw: string) {
+  let digits = raw.replace(/\D/g, "");
+  if (digits.length > 10 && digits.startsWith("91")) digits = digits.slice(2);
+  if (digits.length > 10 && digits.startsWith("0")) digits = digits.slice(1);
+  return digits.slice(0, 10);
+}
 const S = UI.rsvpSection;
 
 function compose(form: Form, lang: Lang) {
@@ -29,7 +37,7 @@ function compose(form: Form, lang: Lang) {
           `🙏 *${couple} — शुभ विवाह* · उपस्थिति`,
           "",
           `नाम: ${form.name}`,
-          `फ़ोन: ${form.phone}`,
+          `फ़ोन: +91 ${form.phone}`,
           form.attending === "yes" ? `उत्तर: अवश्य पधारेंगे (${form.guests} सदस्य)` : "उत्तर: दूर से आशीर्वाद",
           ...(form.attending === "yes" && events ? ["", "कार्यक्रम:", events] : []),
           ...(form.message ? ["", `आशीर्वाद: ${form.message}`] : []),
@@ -38,7 +46,7 @@ function compose(form: Form, lang: Lang) {
           `🙏 *${couple} — Shubh Vivah* · RSVP`,
           "",
           `Name: ${form.name}`,
-          `Phone: ${form.phone}`,
+          `Phone: +91 ${form.phone}`,
           form.attending === "yes" ? `Reply: Joyfully attending (${form.guests} ${form.guests === 1 ? "guest" : "guests"})` : "Reply: Sending blessings from afar",
           ...(form.attending === "yes" && events ? ["", "Ceremonies:", events] : []),
           ...(form.message ? ["", `Blessings: ${form.message}`] : []),
@@ -82,14 +90,15 @@ export function Rsvp() {
     e.preventDefault();
     const next: Errors = {};
     if (!form.name.trim()) next.name = t(S.required);
-    const digits = form.phone.replace(/\D/g, "");
-    if (!digits) next.phone = t(S.required);
-    else if (digits.length < 10 || digits.length > 13) next.phone = t(S.phoneInvalid);
+    if (!form.phone) next.phone = t(S.required);
+    else if (form.phone.length !== 10) next.phone = t(S.phoneInvalid);
     if (!form.attending) next.attending = t(S.choose);
     setErrors(next);
     if (Object.keys(next).length) {
-      const invalid = e.currentTarget.querySelector<HTMLElement>("[aria-invalid='true']");
-      (invalid?.matches("fieldset") ? invalid.querySelector("input") : invalid)?.focus();
+      // Focus the first problem straight away (the DOM hasn't re-rendered with aria-invalid yet),
+      // so on a phone the right keyboard comes back up without another tap.
+      const first = next.name ? "#rsvp-name" : next.phone ? "#rsvp-phone" : "input[name='attending']";
+      e.currentTarget.querySelector<HTMLElement>(first)?.focus();
       return;
     }
     const link = `https://wa.me/${RSVP_WHATSAPP}?text=${encodeURIComponent(compose(form, lang))}`;
@@ -156,20 +165,25 @@ export function Rsvp() {
                   {errors.name}
                 </span>
               </div>
-              <div className="field">
+              <div className="field field--phone">
                 <input
                   id="rsvp-phone"
                   name="phone"
                   type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  autoComplete="tel-national"
+                  enterKeyHint="next"
                   placeholder=" "
                   value={form.phone}
-                  onChange={(e) => update("phone", e.target.value)}
+                  onChange={(e) => update("phone", toMobile(e.target.value))}
                   aria-invalid={Boolean(errors.phone)}
                   aria-describedby="rsvp-phone-error"
                 />
                 <label htmlFor="rsvp-phone">{t(S.phone)}</label>
+                <span className="field__prefix" aria-hidden="true">
+                  +91
+                </span>
                 <span id="rsvp-phone-error" className="field__error">
                   {errors.phone}
                 </span>
