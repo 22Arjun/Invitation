@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { EVENTS, UI, VENUE, type WeddingEvent } from "@/content/wedding";
+import { EVENTS, UI, type WeddingEvent } from "@/content/wedding";
+import { downloadIcs, GOOGLE_CALENDAR } from "@/lib/calendar";
 import { useLang } from "@/lib/lang";
 import { Diya } from "@/components/ornaments/Diya";
 import { Mandala } from "@/components/ornaments/Mandala";
-import { Rich, Split, plain } from "@/components/ornaments/Split";
+import { Rich, Split } from "@/components/ornaments/Split";
 
 const DIGITS = "0123456789".split("");
 
@@ -25,44 +26,6 @@ function Digits({ value, length }: { value: number | null; length: number }) {
     </span>
   );
 }
-
-const icsDate = (iso: string) => new Date(iso).toISOString().replace(/[-:]|\.\d{3}/g, "");
-
-function buildIcs() {
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Harshraj & Archana//Shubh Vivah//EN", "CALSCALE:GREGORIAN"];
-  const stamp = icsDate(new Date().toISOString());
-  for (const e of EVENTS) {
-    const title = plain(e.title.en);
-    lines.push("BEGIN:VEVENT", `UID:${e.id}-2026@harshraj-archana`, `DTSTAMP:${stamp}`);
-    if (e.allDay) {
-      const [y, m, d] = e.start.slice(0, 10).split("-").map(Number);
-      const ymd = (date: Date) => date.toISOString().slice(0, 10).replace(/-/g, "");
-      lines.push(`DTSTART;VALUE=DATE:${ymd(new Date(Date.UTC(y, m - 1, d)))}`, `DTEND;VALUE=DATE:${ymd(new Date(Date.UTC(y, m - 1, d + 1)))}`);
-    } else {
-      const end = new Date(new Date(e.start).getTime() + 6 * 3600_000).toISOString();
-      lines.push(`DTSTART:${icsDate(e.start)}`, `DTEND:${icsDate(end)}`, `LOCATION:${VENUE.name.en}\\, ${VENUE.address.en.replace(/,/g, "\\,")}`);
-    }
-    lines.push(`SUMMARY:${title} · Harshraj & Archana`, `DESCRIPTION:${e.description.en.replace(/,/g, "\\,")}`, "END:VEVENT");
-  }
-  lines.push("END:VCALENDAR");
-  return lines.join("\r\n");
-}
-
-function downloadIcs() {
-  const url = URL.createObjectURL(new Blob([buildIcs()], { type: "text/calendar;charset=utf-8" }));
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "harshraj-archana-wedding.ics";
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-const first = EVENTS[0];
-const GOOGLE = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-  `${plain(first.title.en)} · Harshraj & Archana`,
-)}&dates=${icsDate(first.start)}/${icsDate(new Date(new Date(first.start).getTime() + 6 * 3600_000).toISOString())}&location=${encodeURIComponent(
-  `${VENUE.name.en}, ${VENUE.address.en}`,
-)}&details=${encodeURIComponent(first.description.en)}`;
 
 function nextEvent(now: number): WeddingEvent | undefined {
   return EVENTS.find((e) => new Date(e.start).getTime() > now);
@@ -92,7 +55,7 @@ export function Countdown() {
     };
   }, []);
 
-  const upcoming = now === null ? first : nextEvent(now);
+  const upcoming = now === null ? EVENTS[0] : nextEvent(now);
   const diff = upcoming && now !== null ? Math.max(0, new Date(upcoming.start).getTime() - now) : null;
   const parts =
     diff === null
@@ -128,7 +91,7 @@ export function Countdown() {
                 <span>{t(UI.countdown.addToCalendar)}</span>
                 <i aria-hidden="true">+</i>
               </button>
-              <a className="link-underline" href={GOOGLE} target="_blank" rel="noopener noreferrer">
+              <a className="link-underline" href={GOOGLE_CALENDAR} target="_blank" rel="noopener noreferrer">
                 {t(UI.countdown.google)}
               </a>
             </div>

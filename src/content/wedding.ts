@@ -242,7 +242,11 @@ export const FAMILY = {
 
 export const BAL_MANUHAR = {
   title: { en: "A little plea from the little ones", hi: "बाल मनुहार" },
-  lines: ["खुशियों की रात होगी, जश्न जरा डट के होगा", "मेरे चाचा की शादी में अंदाज जरा हट के होगा"],
+  /** Each line of the couplet as its two halves, so narrow screens break at the natural pause. */
+  lines: [
+    ["खुशियों की रात होगी,", "जश्न जरा डट के होगा"],
+    ["मेरे चाचा की शादी में", "अंदाज जरा हट के होगा"],
+  ],
   translation: [
     "A night full of joy, a celebration in full swing —",
     "at my chacha's wedding, the style will be one of a kind!",
@@ -252,8 +256,8 @@ export const BAL_MANUHAR = {
 
 export const CONTACTS = ["74156-40052", "98263-33210", "90397-35199", "93400-43077"];
 
-/** RSVPs open a WhatsApp chat with this number (the first contact on the card). */
-export const RSVP_WHATSAPP = "917415640052";
+/** RSVPs open a WhatsApp chat with this number: 94066-44404, with India's +91 prefix and no spaces. */
+export const RSVP_WHATSAPP = "919406644404";
 
 export const UI = {
   invocation: "॥ श्री गणेशाय नमः ॥",
@@ -330,7 +334,6 @@ export const UI = {
     eyebrow: { en: "03 — Colours of the celebration", hi: "03 — उत्सव के रंग" },
     title: { en: "Rang, *rasmein*\n& raunak", hi: "रंग, *रस्में*\nऔर रौनक" },
     hint: { en: "Keep scrolling", hi: "स्क्रॉल करते रहें" },
-    swipe: { en: "Swipe to explore", hi: "देखने के लिए स्वाइप करें" },
   },
   venue: {
     eyebrow: { en: "04 — Venue", hi: "04 — कार्यक्रम स्थल" },
@@ -390,6 +393,12 @@ export const UI = {
     credits: { en: "Photo credits", hi: "छायाचित्र श्रेय" },
   },
   langSwitch: { en: "हिन्दी में देखें", hi: "View in English" },
+  dock: {
+    label: { en: "Quick actions", hi: "त्वरित विकल्प" },
+    directions: { en: "Directions", hi: "रास्ता" },
+    calendar: { en: "Calendar", hi: "कैलेंडर" },
+    rsvp: { en: "RSVP", hi: "उपस्थिति" },
+  },
 } as const;
 
 export type GalleryItem = { src: string; alt: Text; word: Text; shape: "tall" | "wide" | "square"; position?: string };

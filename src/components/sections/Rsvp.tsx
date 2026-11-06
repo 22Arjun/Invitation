@@ -96,6 +96,7 @@ export function Rsvp() {
     window.open(link, "_blank", "noopener,noreferrer");
     const r = submit.current?.getBoundingClientRect();
     if (r) burstPetals(r.left + r.width / 2, r.top + r.height / 2, 130);
+    navigator.vibrate?.([14, 60, 14]);
     setSent({ link, name: form.name.trim().split(/\s+/)[0], attending: form.attending });
   };
 

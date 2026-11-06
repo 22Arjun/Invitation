@@ -24,7 +24,7 @@ Each string has an English and a Hindi version (`{ en, hi }`). In headings, `*wo
 | प्रेषक, विनीत, दर्शनाभिलाषी, बुआ-फूफा जी, व्यवस्थापक | `FAMILY` |
 | बाल मनुहार | `BAL_MANUHAR` |
 | Phone numbers in the footer | `CONTACTS` |
-| **WhatsApp number that receives RSVPs** | `RSVP_WHATSAPP` (currently the first number on the card) |
+| **WhatsApp number that receives RSVPs** | `RSVP_WHATSAPP` (currently 94066-44404) |
 | Gallery photos and captions | `GALLERY` |
 
 The countdown automatically targets the next upcoming ceremony and switches to “Just married” afterwards.
@@ -42,7 +42,7 @@ src/
   content/wedding.ts   all copy, dates and data
   lib/                 gsap setup, Lenis scroll helpers, language store, arch geometry, petal canvas
   components/
-    chrome/            preloader doors, nav + menu + language toggle, cursor, reveals, theme controller
+    chrome/            preloader doors, nav + menu + language toggle, mobile action bar, cursor, reveals, theme controller
     sections/          hero (palace-window fly-through), invitation, couple, countdown, celebrations,
                        gallery, venue, blessings, bal manuhar, RSVP, footer
     ornaments/         generative SVG: mandala, lanterns, diyas, florals, kalash, dividers, badges

@@ -7,7 +7,7 @@ import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { useLang } from "@/lib/lang";
 import { Split } from "@/components/ornaments/Split";
 
-/** A pinned horizontal gallery on large screens; a native swipe strip on touch screens. */
+/** A pinned gallery that slides sideways as you scroll down, on every screen size. */
 export function Shringaar() {
   const { t } = useLang();
   const root = useRef<HTMLElement>(null);
@@ -15,7 +15,7 @@ export function Shringaar() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add(`${MOTION_OK} and (min-width: 900px)`, () => {
+      mm.add(MOTION_OK, () => {
         const track = root.current?.querySelector<HTMLElement>(".shringaar__track");
         if (!track) return;
         const distance = () => track.scrollWidth - window.innerWidth;
@@ -71,8 +71,7 @@ export function Shringaar() {
             </h2>
             <p className="shringaar__hint" aria-hidden="true">
               <span />
-              <span className="shringaar__hint-scroll">{t(UI.shringaar.hint)}</span>
-              <span className="shringaar__hint-touch">{t(UI.shringaar.swipe)}</span>
+              {t(UI.shringaar.hint)}
             </p>
           </div>
           {GALLERY.map((item, i) => (

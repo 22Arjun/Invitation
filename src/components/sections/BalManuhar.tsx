@@ -51,11 +51,15 @@ export function BalManuhar() {
         बाल मनुहार
       </h2>
       <blockquote className="manuhar__poem" lang="hi">
-        {BAL_MANUHAR.lines.map((line) => (
-          <p key={line}>
-            {line.split(" ").map((word, i) => (
-              <span key={i} className="manuhar__word">
-                {word}
+        {BAL_MANUHAR.lines.map((halves) => (
+          <p key={halves[0]}>
+            {halves.map((half) => (
+              <span key={half} className="manuhar__half">
+                {half.split(" ").map((word, i) => (
+                  <span key={i} className="manuhar__word">
+                    {word}
+                  </span>
+                ))}
               </span>
             ))}
           </p>

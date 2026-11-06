@@ -122,6 +122,15 @@
     --accent: #d9ae5f;
   }
 
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  a,
+  button,
+  label {
+    touch-action: manipulation;
+  }
+
   ::selection {
     background: var(--color-rani);
     color: var(--color-cream);
@@ -445,7 +454,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.1rem var(--gutter);
+    padding: max(1.1rem, env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right)) 1.1rem max(var(--gutter), env(safe-area-inset-left));
     color: var(--fg);
     transition:
       transform 0.8s var(--ease-silk),
@@ -690,14 +699,25 @@
   }
   .menu__aside {
     position: relative;
-    display: none;
+    display: grid;
     gap: 0.9rem;
     justify-items: center;
     text-align: center;
   }
-  @media (width >= 64rem) {
+  @media (width < 64rem) {
     .menu__aside {
-      display: grid;
+      gap: 0.55rem;
+      padding-top: 1.6rem;
+      border-top: 1px solid rgba(236, 208, 143, 0.25);
+    }
+    .menu__mandala {
+      display: none;
+    }
+    .menu__aside .menu__names {
+      font-size: 2rem;
+    }
+    .menu__aside .menu__meta {
+      font-size: 1.05rem;
     }
   }
   .menu__mandala {
@@ -938,10 +958,17 @@
     font-size: clamp(1.15rem, 2vw, 1.8rem);
   }
   .hero__scene-dates {
+    max-width: 36rem;
     font-size: 0.78rem;
     letter-spacing: 0.32em;
+    line-height: 1.9;
     text-transform: uppercase;
+    text-wrap: balance;
     opacity: 0.85;
+    @media (width < 48rem) {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+    }
   }
   :lang(hi) .hero__scene-dates {
     font-family: var(--font-deva);
@@ -1210,7 +1237,7 @@
       inset: auto 0 auto 0;
       top: calc(50% + (-30 - var(--cy)) * var(--k));
       translate: 0 -50%;
-      font-size: 10.4vw;
+      font-size: 11.6vw;
     }
     .hero__name,
     .hero__amp {
@@ -1249,8 +1276,17 @@
     .hero__dates dd small {
       display: none;
     }
+    .hero__dates dt {
+      font-size: 0.66rem;
+    }
+    .hero__dates dd {
+      font-size: 1.08rem;
+    }
     .hero__cue {
       margin-top: 0.4rem;
+    }
+    .hero__cue span {
+      display: none;
     }
     .hero__cue i {
       height: 1.6rem;
@@ -1358,6 +1394,8 @@
     place-items: center;
     width: 7.5rem;
     aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
   }
   .badge__ring {
     position: absolute;
@@ -1807,6 +1845,11 @@
     margin-top: clamp(4rem, 10vh, 7rem);
     padding-bottom: 2.5rem;
   }
+  @media (width < 48rem) {
+    .countdown__diyas .diya:nth-child(n + 8) {
+      display: none;
+    }
+  }
   .countdown__diyas::after {
     content: "";
     position: absolute;
@@ -1830,7 +1873,7 @@
     --ink: #3a1606;
     --hl: #7d0e3e;
     position: sticky;
-    top: calc(9vh + var(--i) * 1.3rem);
+    top: var(--stick, calc(9vh + var(--i) * 1.3rem));
     min-height: min(84vh, 50rem);
     overflow: hidden;
     border-radius: clamp(1.2rem, 2.4vw, 2.2rem);
@@ -2037,49 +2080,67 @@
     opacity: 0;
     pointer-events: none;
   }
+  @media (width < 48rem) {
+    .stack {
+      gap: 4vh;
+      padding-inline: 0.75rem;
+    }
+    .stack__card {
+      min-height: 0;
+    }
+    .stack__inner {
+      gap: 1.1rem;
+      padding: 1.6rem 1.35rem 1.9rem;
+    }
+    .stack__media {
+      height: 24svh;
+      width: calc(24svh * 0.75);
+    }
+    .stack__text {
+      gap: 0.8rem;
+    }
+    .stack__title {
+      font-size: 2.3rem;
+    }
+    :lang(hi) .stack__title {
+      font-size: 1.95rem;
+    }
+    .stack__date {
+      gap: 0.8rem;
+      margin-block: 0.2rem;
+    }
+    .stack__day {
+      font-size: 3rem;
+    }
+  }
 
   /* ───────────────────────── Shringaar (horizontal gallery) ───────────────────────── */
 
   .shringaar {
     position: relative;
   }
+  /* Pinned on every screen size: scrolling down slides the gallery sideways. */
   .shringaar__pin {
     position: relative;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    height: 100svh;
     overflow: hidden;
-    padding-block: var(--section-y);
-  }
-  @media (width >= 56.25rem) {
-    .shringaar__pin {
-      height: 100vh;
-      padding-block: 0;
-      display: flex;
-      align-items: center;
-    }
   }
   .shringaar__track {
     display: flex;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 5rem);
-    padding-inline: var(--gutter);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gutter);
-    scrollbar-width: none;
-  }
-  @media (width >= 56.25rem) {
-    .shringaar__track {
-      overflow: visible;
-      width: max-content;
-      padding-right: 12vw;
-      will-change: transform;
-    }
+    gap: clamp(1.25rem, 4vw, 5rem);
+    width: max-content;
+    padding-inline: var(--gutter) 12vw;
+    will-change: transform;
   }
   .shringaar__intro {
     flex: none;
     display: grid;
     gap: 1.5rem;
     width: min(82vw, 36rem);
-    scroll-snap-align: start;
   }
   .shringaar__hint {
     display: flex;
@@ -2095,18 +2156,7 @@
     font-size: 0.95rem;
     letter-spacing: 0.02em;
   }
-  .shringaar__hint-touch {
-    display: none;
-  }
-  @media (width < 56.25rem) {
-    .shringaar__hint-touch {
-      display: inline;
-    }
-    .shringaar__hint-scroll {
-      display: none;
-    }
-  }
-  .shringaar__hint span:first-child {
+  .shringaar__hint span {
     width: 4rem;
     height: 1px;
     background: currentColor;
@@ -2115,7 +2165,6 @@
     flex: none;
     display: grid;
     gap: 1rem;
-    scroll-snap-align: center;
   }
   .shot__frame {
     position: relative;
@@ -2134,6 +2183,23 @@
   .shot--wide .shot__frame {
     aspect-ratio: 4 / 3;
     height: clamp(14rem, 46vh, 32rem);
+  }
+  /* Phones: size the frames by width so every photo reads large in a tall, narrow screen. */
+  @media (width < 48rem) {
+    .shot__frame,
+    .shot--tall .shot__frame,
+    .shot--square .shot__frame,
+    .shot--wide .shot__frame {
+      height: auto;
+      width: 74vw;
+    }
+    .shot--tall .shot__frame {
+      width: 70vw;
+      max-height: 62svh;
+    }
+    .shot--wide .shot__frame {
+      width: 82vw;
+    }
   }
   .shot__frame img {
     object-fit: cover;
@@ -2163,14 +2229,11 @@
     position: absolute;
     left: var(--gutter);
     right: var(--gutter);
-    bottom: 6vh;
+    bottom: max(6vh, 1.5rem);
     height: 1px;
     background: color-mix(in srgb, var(--fg) 18%, transparent);
-    display: none;
-  }
-  @media (width >= 56.25rem) {
-    .shringaar__progress {
-      display: block;
+    @media (width < 48rem) {
+      bottom: calc(6.25rem + env(safe-area-inset-bottom));
     }
   }
   .shringaar__progress span {
@@ -2330,6 +2393,11 @@
     top: -2rem;
     right: -1.5rem;
     width: 8.5rem;
+    @media (width < 48rem) {
+      top: -1.5rem;
+      right: 0;
+      width: 6.75rem;
+    }
     border-radius: 50%;
     background: var(--color-wine);
     color: var(--color-gold-light);
@@ -2510,6 +2578,17 @@
   .manuhar__word {
     display: inline-block;
     margin-inline: 0.14em;
+  }
+  .manuhar__half + .manuhar__half::before {
+    content: " ";
+  }
+  @media (width < 48rem) {
+    .manuhar__half {
+      display: block;
+    }
+    .manuhar__poem p + p {
+      margin-top: 0.9rem;
+    }
   }
   .manuhar__translation {
     max-width: 40rem;
@@ -2892,6 +2971,78 @@
     margin-top: 0.6rem;
   }
 
+  /* ───────────────────────── Mobile dock ───────────────────────── */
+
+  .dock {
+    position: fixed;
+    left: 50%;
+    bottom: calc(0.8rem + env(safe-area-inset-bottom));
+    z-index: 55;
+    display: none;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 0.3rem;
+    width: min(calc(100vw - 1.5rem), 25rem);
+    padding: 0.35rem;
+    border-radius: 1.6rem;
+    background: #3b0719;
+    color: var(--color-cream);
+    box-shadow:
+      0 0 0 1px rgba(236, 208, 143, 0.35),
+      0 18px 40px -12px rgba(20, 3, 9, 0.65);
+    transform: translate(-50%, calc(100% + 2rem));
+    transition: transform 0.7s var(--ease-silk);
+  }
+  @media (width < 48rem) {
+    .dock {
+      display: grid;
+    }
+  }
+  .dock.is-visible {
+    transform: translate(-50%, 0);
+  }
+  .dock__item {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 0.28rem;
+    height: 3.5rem;
+    border-radius: 1.3rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+  }
+  .dock__item:active {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .dock__item svg {
+    width: 1.3rem;
+    height: 1.3rem;
+    fill: none;
+    stroke: var(--color-gold-light);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dock__item--primary {
+    background: linear-gradient(115deg, #b07a26, #efd38e 48%, #c8963e 78%);
+    color: #3b0719;
+    font-weight: 500;
+  }
+  .dock__item--primary svg {
+    fill: #3b0719;
+    stroke: none;
+  }
+  .dock__item--primary:active {
+    background: #efd38e;
+  }
+  :lang(hi) .dock__item {
+    font-family: var(--font-deva);
+    font-size: 0.86rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
   /* ───────────────────────── Footer ───────────────────────── */
 
   .footer {
@@ -3033,6 +3184,15 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Without the scroll-driven gallery, let the strip scroll sideways natively. */
+  .shringaar__pin {
+    height: auto;
+    padding-block: var(--section-y);
+  }
+  .shringaar__track {
+    width: auto;
+    overflow-x: auto;
   }
   /* Without the fly-through, the scene text would sit behind the window's own captions. */
   .hero__scene-text {

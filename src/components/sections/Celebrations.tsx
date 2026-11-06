@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef, type CSSProperties } from "react";
 import { EVENTS, UI } from "@/content/wedding";
-import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
+import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { useLang } from "@/lib/lang";
 import { Mandala } from "@/components/ornaments/Mandala";
 import { Rich, Split } from "@/components/ornaments/Split";
@@ -17,13 +17,23 @@ export function Celebrations() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
+      const cards = gsap.utils.toArray<HTMLElement>(".stack__card");
+      // A card may only stick (and be covered by the next) after its whole height has been on screen;
+      // on phones the cards are taller than the viewport, so they stick higher, even partly above it.
+      const stickAt = (card: HTMLElement, i: number) => {
+        const bottomClearance = window.matchMedia("(width < 48rem)").matches ? 92 : 12; // the mobile dock
+        return Math.min(window.innerHeight * 0.09 + i * 18, window.innerHeight - card.offsetHeight - bottomClearance);
+      };
+      const setSticky = () => cards.forEach((card, i) => card.style.setProperty("--stick", `${stickAt(card, i)}px`));
+      setSticky();
+      ScrollTrigger.addEventListener("refreshInit", setSticky);
+
       mm.add(MOTION_OK, () => {
-        const cards = gsap.utils.toArray<HTMLElement>(".stack__card");
         cards.forEach((card, i) => {
           const next = cards[i + 1];
           if (next) {
             gsap
-              .timeline({ scrollTrigger: { trigger: next, start: "top bottom", end: "top 12%", scrub: true } })
+              .timeline({ scrollTrigger: { trigger: next, start: "top bottom", end: () => `top ${stickAt(next, i + 1)}px`, scrub: true, invalidateOnRefresh: true } })
               .to(card, { scale: 0.9 + i * 0.012, ease: "none" }, 0)
               .to(card.querySelector(".stack__shade"), { opacity: 0.55, ease: "none" }, 0);
           }
@@ -39,7 +49,10 @@ export function Celebrations() {
           });
         });
       });
-      return () => mm.revert();
+      return () => {
+        ScrollTrigger.removeEventListener("refreshInit", setSticky);
+        mm.revert();
+      };
     },
     { scope: root },
   );

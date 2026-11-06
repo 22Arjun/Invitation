@@ -1,6 +1,7 @@
 "use client";
 
 import { UI, VENUE } from "@/content/wedding";
+import { DIRECTIONS } from "@/lib/calendar";
 import { useLang } from "@/lib/lang";
 import { Badge } from "@/components/ornaments/Badge";
 import { Mandala } from "@/components/ornaments/Mandala";
@@ -8,7 +9,6 @@ import { Split } from "@/components/ornaments/Split";
 import { ArchOutline } from "./ArchOutline";
 
 const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(VENUE.mapsQuery)}&z=15&output=embed`;
-const DIRECTIONS = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE.mapsQuery)}`;
 
 export function Venue() {
   const { t } = useLang();

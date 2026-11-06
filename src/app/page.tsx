@@ -1,4 +1,5 @@
 import { Cursor } from "@/components/chrome/Cursor";
+import { MobileDock } from "@/components/chrome/MobileDock";
 import { Nav } from "@/components/chrome/Nav";
 import { Preloader } from "@/components/chrome/Preloader";
 import { Reveals } from "@/components/chrome/Reveals";
@@ -44,6 +45,7 @@ export default function Home() {
       </main>
       <Footer />
       {/* Decorative fixed layers sit after the content so they never force it onto extra GPU layers. */}
+      <MobileDock />
       <ScrollProgress />
       <Cursor />
       {/* Created last so every pinned section above is measured first. */}
