@@ -1,0 +1,299 @@
+/* Plain (non-module) CSS: this project routes every .css file through Tailwind, which skips CSS-module hashing. */
+/* The invite maker reuses the site's .field, .btn and .eyebrow styles from globals.css. */
+
+.maker {
+  min-height: 100vh;
+}
+
+/* Wide tracking and capitals break Devanagari apart; Hindi inside English-styled labels opts out. */
+.maker span[lang="hi"] {
+  font-family: var(--font-deva);
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.maker__head {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(2.5rem, 7vw, 5rem) var(--gutter) clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+  justify-items: center;
+}
+
+.maker__title {
+  font-family: var(--font-deva);
+  font-size: clamp(2.3rem, 6vw, 4.2rem);
+  line-height: 1.25;
+}
+
+.maker__title em {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 0.72em;
+  color: var(--accent);
+}
+
+.maker__lede {
+  max-width: 40rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.maker__lede:lang(hi) {
+  font-family: var(--font-deva);
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+.maker__body {
+  display: grid;
+  gap: 2.5rem;
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter) 4rem;
+}
+
+@media (width >= 60rem) {
+  .maker__body {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 4rem;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: calc(var(--gutter) + 1rem);
+  }
+}
+
+.maker__form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.maker__hint {
+  margin-top: -1rem;
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
+
+.field .maker__hint {
+  margin-top: 0.45rem;
+}
+
+.maker__seg {
+  border: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.maker__seg legend {
+  margin-bottom: 0.7rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.maker__seg-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.maker__seg-row--two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.maker__seg label,
+.maker__toggle {
+  position: relative;
+  cursor: pointer;
+}
+
+.maker__seg input,
+.maker__toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.maker__seg label > span {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  padding: 0.75rem 0.4rem;
+  border-radius: 0.9rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg) 25%, transparent);
+  text-align: center;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.maker__seg b {
+  font-family: var(--font-deva);
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+.maker__seg b:lang(en) {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.maker__seg small {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.maker__seg input:checked + span {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+.maker__seg input:focus-visible + span,
+.maker__toggle input:focus-visible + span::before {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.maker__toggle span {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1rem;
+}
+
+.maker__toggle b {
+  font-family: var(--font-deva);
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+.maker__toggle span::before {
+  content: "";
+  flex: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.3rem;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.maker__toggle input:checked + span::before {
+  background: var(--accent)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a0a26' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E")
+    center / 75% no-repeat;
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.maker__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+}
+
+.maker .btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.maker__next {
+  justify-self: start;
+}
+
+.maker__next:disabled {
+  opacity: 0.4;
+}
+
+.maker__preview {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+@media (width >= 60rem) {
+  .maker__preview {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.maker__greeting {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  border-radius: 1.2rem;
+  background: radial-gradient(120% 120% at 50% 0%, #6e0b36, #2a0512);
+  box-shadow: inset 0 0 0 1px rgba(236, 208, 143, 0.35);
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+.maker__greeting-om {
+  font-family: var(--font-deva);
+  font-size: 0.95rem;
+  color: var(--color-gold-light);
+}
+
+.maker__greeting-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.2;
+  color: var(--color-cream);
+}
+
+.maker__greeting:lang(hi) .maker__greeting-name {
+  font-family: var(--font-deva);
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.maker__greeting-welcome {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.maker__greeting:lang(hi) .maker__greeting-welcome {
+  font-family: var(--font-deva);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* A WhatsApp-style bubble so the family sees exactly what goes out. */
+.maker__bubble {
+  position: relative;
+  padding: 0.9rem 1rem;
+  border-radius: 0.2rem 0.9rem 0.9rem 0.9rem;
+  background: #e7ffdb;
+  color: #111b21;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.maker__link {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.maker__sent ul {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}

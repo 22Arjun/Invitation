@@ -397,6 +397,11 @@ export const UI = {
     credits: { en: "Photo credits", hi: "छायाचित्र श्रेय" },
   },
   langSwitch: { en: "हिन्दी में देखें", hi: "View in English" },
+  guest: {
+    family: { en: " & family", hi: " सपरिवार" },
+    welcome: { en: "a warm welcome to you", hi: "आपका हार्दिक स्वागत है" },
+    invited: { en: "you're cordially invited to Harshraj & Archana's wedding", hi: "हर्षराज एवं अर्चना के शुभ विवाह में आपको सादर आमंत्रण" },
+  },
   dock: {
     label: { en: "Quick actions", hi: "त्वरित विकल्प" },
     directions: { en: "Directions", hi: "रास्ता" },

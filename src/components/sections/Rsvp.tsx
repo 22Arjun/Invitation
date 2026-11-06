@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useRef, useState, type FormEvent } from "react";
 import { COUPLE, EVENTS, RSVP_WHATSAPP, UI, type Lang } from "@/content/wedding";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { useGuest } from "@/lib/guest-context";
 import { useLang } from "@/lib/lang";
+import { toMobile } from "@/lib/phone";
 import { burstPetals } from "@/lib/petals";
 import { scrollToTarget } from "@/lib/scroll";
 import { Mandala } from "@/components/ornaments/Mandala";
@@ -16,13 +18,6 @@ type Errors = Partial<Record<"name" | "phone" | "attending", string>>;
 
 const EMPTY: Form = { name: "", phone: "", attending: "", guests: 1, events: EVENTS.map((e) => e.id), message: "" };
 
-/** Keeps the 10-digit Indian mobile number, whatever was typed, pasted or autofilled ("+91 98765-43210", "098765…"). */
-function toMobile(raw: string) {
-  let digits = raw.replace(/\D/g, "");
-  if (digits.length > 10 && digits.startsWith("91")) digits = digits.slice(2);
-  if (digits.length > 10 && digits.startsWith("0")) digits = digits.slice(1);
-  return digits.slice(0, 10);
-}
 const S = UI.rsvpSection;
 
 function compose(form: Form, lang: Lang) {
@@ -56,7 +51,9 @@ function compose(form: Form, lang: Lang) {
 
 export function Rsvp() {
   const { lang, t } = useLang();
-  const [form, setForm] = useState<Form>(EMPTY);
+  const guest = useGuest();
+  // Opened from a personal link: the name is already filled in, exactly as the family wrote it.
+  const [form, setForm] = useState<Form>(() => ({ ...EMPTY, name: guest?.name ?? "" }));
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState<{ link: string; name: string; attending: Attending } | null>(null);
   const root = useRef<HTMLElement>(null);
@@ -106,7 +103,8 @@ export function Rsvp() {
     const r = submit.current?.getBoundingClientRect();
     if (r) burstPetals(r.left + r.width / 2, r.top + r.height / 2, 130);
     navigator.vibrate?.([14, 60, 14]);
-    setSent({ link, name: form.name.trim().split(/\s+/)[0], attending: form.attending });
+    const name = form.name.trim();
+    setSent({ link, name: guest && name === guest.name ? name : name.split(/\s+/)[0], attending: form.attending });
   };
 
   const thanksTitle = sent ? t(sent.attending === "yes" ? S.thanksTitleYes : S.thanksTitleNo).replace("{name}", sent.name) : "";

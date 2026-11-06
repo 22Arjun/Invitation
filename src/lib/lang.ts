@@ -24,6 +24,15 @@ function subscribe(cb: () => void) {
   };
 }
 
+/** True once this visitor has chosen a language (or been given one by their invitation). */
+export function hasLangPreference() {
+  try {
+    return localStorage.getItem(KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
 export function setLang(lang: Lang) {
   current = lang;
   try {

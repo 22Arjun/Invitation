@@ -38,15 +38,28 @@ There is no database. Submitting the form opens WhatsApp with a pre-written mess
 
 ```
 src/
-  app/                 layout (fonts, metadata), page (section order), globals.css (Tailwind tokens + components)
+  app/                 layout (fonts, metadata), page, i/[token] (personal invitations), invite (link maker),
+                       og-card (share-image design, dev only), globals.css (Tailwind tokens + components)
   content/wedding.ts   all copy, dates and data
-  lib/                 gsap setup, Lenis scroll helpers, language store, arch geometry, petal canvas
-  components/
+  lib/                 gsap setup, Lenis scroll helpers, language store, guest links + messages, arch geometry, petal canvas
+  components/          Site.tsx (the whole invitation, with or without a guest)
     chrome/            preloader doors, nav + menu + language toggle, mobile action bar, cursor, reveals, theme controller
     sections/          hero (palace-window fly-through), invitation, couple, countdown, celebrations,
                        gallery, venue, blessings, bal manuhar, RSVP, footer
     ornaments/         generative SVG: mandala, lanterns, diyas, florals, kalash, dividers, badges
 ```
+
+## Personal invitations
+
+Open **`/invite`** on the live site (it isn't linked anywhere and is hidden from search engines). For each guest:
+
+1. Type their name as you'd write it on a card, e.g. `शर्मा जी`, `मामा जी`, `Sharma ji`.
+2. Pick a salutation (आदरणीय / प्रिय / none) and whether to add सपरिवार.
+3. Optionally enter their mobile number to open their chat directly, then tap **Send**.
+
+A name typed in Hindi sends a Hindi invitation and opens the site in Hindi for them. The link (`/i/…`) carries the name itself, so there is no guest list to maintain.
+The guest sees their name in the WhatsApp preview title, a welcome on the opening doors ("आदरणीय शर्मा जी सपरिवार · आपका हार्दिक स्वागत है"), a salutation on the invitation, and their name already filled in the RSVP.
+Forwarded links keep the original guest's name. A damaged link simply opens the normal invitation.
 
 ## Share preview (WhatsApp, etc.)
 

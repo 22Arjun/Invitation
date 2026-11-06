@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Fragment, useRef } from "react";
 import { SHLOKA, UI } from "@/content/wedding";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
+import { addressOf } from "@/lib/guest";
+import { useGuest } from "@/lib/guest-context";
 import { useLang } from "@/lib/lang";
 import { Divider } from "@/components/ornaments/Divider";
 import { Kalash } from "@/components/ornaments/Kalash";
@@ -12,6 +14,7 @@ const PILLS = ["/images/pill-1.jpg", "/images/pill-2.jpg", "/images/pill-3.jpg"]
 
 export function Invitation() {
   const { lang, t } = useLang();
+  const guest = useGuest();
   const root = useRef<HTMLElement>(null);
 
   // Words brighten one by one as you read down; tiny photo pills unfurl inside the sentence.
@@ -57,6 +60,11 @@ export function Invitation() {
       <p className="eyebrow eyebrow--center" data-reveal="fade">
         {t(UI.invitation.eyebrow)}
       </p>
+      {guest && (
+        <p className="invitation__dear" data-reveal="fade">
+          {addressOf(guest, lang)},
+        </p>
+      )}
       <p className="invitation__text">
         {parts.map((part, i) =>
           i % 2 === 1 ? (

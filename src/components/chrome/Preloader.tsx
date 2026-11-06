@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import { COUPLE, UI } from "@/content/wedding";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { addressOf } from "@/lib/guest";
+import { useGuest } from "@/lib/guest-context";
 import { emitIntro } from "@/lib/intro";
 import { useLang } from "@/lib/lang";
 import { showerPetals } from "@/lib/petals";
@@ -45,7 +47,8 @@ function DoorArt() {
 export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
-  const { t } = useLang();
+  const { lang, t } = useLang();
+  const guest = useGuest();
 
   useGSAP(
     () => {
@@ -75,7 +78,7 @@ export function Preloader() {
       Promise.all([
         document.fonts?.ready,
         heroImg?.decode().catch(() => undefined),
-        new Promise((r) => setTimeout(r, reduce ? 200 : 2700)),
+        new Promise((r) => setTimeout(r, reduce ? 200 : guest ? 3800 : 2700)),
       ]).then(() => {
         if (cancelled) return;
         fill.kill();
@@ -128,7 +131,13 @@ export function Preloader() {
         <p className="preloader__line preloader__invocation" lang="hi">
           {UI.invocation}
         </p>
-        <p className="preloader__line preloader__names">
+        {guest && (
+          <div className="preloader__line preloader__guest">
+            <p className="preloader__guest-name">{addressOf(guest, lang)}</p>
+            <p className="preloader__guest-welcome">{t(UI.guest.welcome)}</p>
+          </div>
+        )}
+        <p className={`preloader__line preloader__names${guest ? " preloader__names--small" : ""}`}>
           {t(COUPLE.groom.name)} <em>&amp;</em> {t(COUPLE.bride.name)}
         </p>
         <p className="preloader__line preloader__count">
