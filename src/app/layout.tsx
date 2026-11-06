@@ -24,11 +24,16 @@ export const metadata: Metadata = {
   title: "Harshraj & Archana · शुभ विवाह · 25 November 2026",
   description:
     "The Rajawat family joyfully invites you to the wedding celebrations of Harshraj & Archana — 19 to 26 November 2026, Bhind, Madhya Pradesh.",
+  // The share image is src/app/opengraph-image.jpg (designed at /og-card under `next dev`).
+  // On Vercel its URL is made absolute automatically; on another host, set `metadataBase`.
   openGraph: {
     title: "Harshraj & Archana · शुभ विवाह",
-    description: "Lagun, Phaldan & Preetibhoj · Thursday 19 November 2026, 5 PM · Banke Bihari Marriage Garden, Bhind",
+    description: "सादर आमंत्रण · Lagun & Phaldan: Thu 19 Nov, 5 PM · Shubh Vivah: Wed 25 Nov · Banke Bihari Marriage Garden, Bhind",
+    siteName: "Harshraj & Archana",
+    locale: "en_IN",
     type: "website",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

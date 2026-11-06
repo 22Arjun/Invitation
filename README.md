@@ -48,6 +48,16 @@ src/
     ornaments/         generative SVG: mandala, lanterns, diyas, florals, kalash, dividers, badges
 ```
 
+## Share preview (WhatsApp, etc.)
+
+The image people see when the link is shared is `src/app/opengraph-image.jpg` (1200×630).
+It is designed as a page at **`/og-card`**, which only exists under `npm run dev`. To update it after changing names or dates:
+
+1. `npm run dev`, then open `http://localhost:3000/og-card` and check it looks right.
+2. Screenshot the card at 1200×630 and save it as `src/app/opengraph-image.jpg`. Keep it under ~300 KB, because WhatsApp sometimes drops larger previews.
+
+WhatsApp caches previews per link. After changing the image, share the link with something new on the end (e.g. `?v=2`) to see the update.
+
 ## Photos
 
 Photos are in `public/images/`; sources and licences are in `public/images/CREDITS.md`.

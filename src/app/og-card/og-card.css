@@ -1,0 +1,155 @@
+/* Plain (non-module) CSS: this project routes every .css file through Tailwind, which skips CSS-module hashing. */
+/* The share card is captured at exactly 1200×630; everything here is laid out in those pixels. */
+
+.og-card {
+  position: relative;
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  background: radial-gradient(70% 90% at 50% 45%, #fffaf0, #f3e3c7);
+  color: var(--color-ink);
+}
+
+.og-wall {
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+}
+
+.og-arch {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.og-lantern {
+  z-index: 1;
+}
+
+.og-florals {
+  position: absolute;
+  bottom: -10px;
+  width: 285px;
+}
+
+.og-florals svg {
+  display: block;
+  width: 100%;
+}
+
+.og-florals-l {
+  left: -14px;
+}
+
+.og-florals-r {
+  right: -14px;
+}
+
+.og-window {
+  position: absolute;
+  left: 450px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 100%;
+  color: var(--color-cream);
+  text-align: center;
+}
+
+.og-invocation {
+  margin-top: 132px;
+  font-family: var(--font-deva);
+  font-size: 18px;
+  color: var(--color-gold-light);
+}
+
+.og-amp {
+  margin-top: 54px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 104px;
+  line-height: 0.8;
+  color: var(--color-gold-light);
+}
+
+.og-shubh {
+  margin-top: 26px;
+  font-family: var(--font-deva);
+  font-size: 58px;
+  line-height: 1.3;
+  padding-inline: 6px;
+  filter: drop-shadow(0 2px 10px rgba(20, 3, 9, 0.75));
+}
+
+.og-place {
+  margin-top: 28px;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.og-side {
+  position: absolute;
+  top: 168px;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+}
+
+.og-left {
+  right: calc(50% + 196px);
+  align-items: flex-end;
+  text-align: right;
+}
+
+.og-right {
+  left: calc(50% + 196px);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.og-name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 104px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.og-family {
+  margin-top: 10px;
+  font-size: 14px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+}
+
+.og-date {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 34px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(168, 112, 31, 0.45);
+}
+
+.og-date-label {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-rani);
+}
+
+.og-date-value {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--color-wine);
+}
