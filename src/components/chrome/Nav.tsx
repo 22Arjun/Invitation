@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useEffectEvent, useRef, useState, type MouseEvent } from "react";
-import { COUPLE, UI } from "@/content/wedding";
+import { COUPLE, KEY_EVENTS, UI } from "@/content/wedding";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { setLang, useLang } from "@/lib/lang";
 import { lockScroll, scrollToTarget } from "@/lib/scroll";
@@ -142,7 +142,11 @@ export function Nav() {
             <p className="menu__names">
               {t(COUPLE.groom.name)} <em>&amp;</em> {t(COUPLE.bride.name)}
             </p>
-            <p className="menu__meta">{t(UI.hero.date)}</p>
+            {KEY_EVENTS.map((e) => (
+              <p key={e.id} className="menu__meta">
+                <span>{t(e.short)}</span> {t(e.weekday)}, {e.day} {t(e.month)}
+              </p>
+            ))}
             <p className="menu__meta">{t(UI.hero.place)}</p>
           </aside>
         </div>

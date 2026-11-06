@@ -67,6 +67,8 @@ export const SHLOKA = {
 export type WeddingEvent = {
   id: string;
   title: Text;
+  /** Short name for date lines, e.g. "Lagun & Phaldan" on 19 Nov, "Shubh Vivah" on 25 Nov. */
+  short: Text;
   subtitle: Text;
   /** ISO start; events without a printed time start at midnight IST. */
   start: string;
@@ -86,6 +88,7 @@ export const EVENTS: WeddingEvent[] = [
   {
     id: "lagun",
     title: { en: "Lagun, Phaldan *&* Preetibhoj", hi: "लगुन, फलदान *एवं* प्रीतिभोज" },
+    short: { en: "Lagun & Phaldan", hi: "लगुन व फलदान" },
     subtitle: { en: "The auspicious beginning", hi: "मांगलिक शुभारंभ" },
     start: "2026-11-19T17:00:00+05:30",
     allDay: false,
@@ -105,6 +108,7 @@ export const EVENTS: WeddingEvent[] = [
   {
     id: "mandap",
     title: { en: "*The* Mandap", hi: "मण्डप" },
+    short: { en: "Mandap", hi: "मण्डप" },
     subtitle: { en: "Raising the sacred canopy", hi: "पवित्र मण्डप की स्थापना" },
     start: "2026-11-24T00:00:00+05:30",
     allDay: true,
@@ -122,6 +126,7 @@ export const EVENTS: WeddingEvent[] = [
   {
     id: "panigrahan",
     title: { en: "Tika *&* Panigrahan Sanskar", hi: "टीका *एवं* पाणिग्रहण संस्कार" },
+    short: { en: "Shubh Vivah", hi: "शुभ विवाह" },
     subtitle: { en: "The wedding", hi: "शुभ विवाह" },
     start: "2026-11-25T00:00:00+05:30",
     allDay: true,
@@ -139,6 +144,7 @@ export const EVENTS: WeddingEvent[] = [
   {
     id: "vadhu-aagman",
     title: { en: "Vadhu *Aagman*", hi: "वधु *आगमन*" },
+    short: { en: "Vadhu Aagman", hi: "वधु आगमन" },
     subtitle: { en: "Welcoming the bride home", hi: "नववधु का गृह-प्रवेश" },
     start: "2026-11-26T00:00:00+05:30",
     allDay: true,
@@ -154,6 +160,9 @@ export const EVENTS: WeddingEvent[] = [
     tone: "rose",
   },
 ];
+
+/** The two dates guests most need: the Lagun & Phaldan (19 Nov) and the wedding itself (25 Nov). */
+export const KEY_EVENTS = EVENTS.filter((e) => e.id === "lagun" || e.id === "panigrahan");
 
 export const VENUE = {
   name: { en: "Banke Bihari Marriage Garden", hi: "बांके बिहारी मैरिज गार्डन" },
@@ -261,8 +270,7 @@ export const UI = {
     { href: "#rsvp", label: { en: "RSVP", hi: "उपस्थिति" } },
   ],
   hero: {
-    kicker: { en: "are getting married", hi: "शुभ विवाह" },
-    date: { en: "Thursday, 19 November 2026", hi: "गुरुवार, 19 नवंबर 2026" },
+    kicker: { en: "are getting married", hi: "सात फेरों की ओर" },
     place: { en: "Bhind, Madhya Pradesh", hi: "भिंड, मध्य प्रदेश" },
     badge: { en: "Shubh Vivah · scroll to enter · ", hi: "शुभ विवाह · स्वागतम् · " },
     sceneEyebrow: { en: "You are cordially invited", hi: "आप सपरिवार सादर आमंत्रित हैं" },
@@ -270,12 +278,12 @@ export const UI = {
       en: "to the wedding celebrations of Harshraj & Archana",
       hi: "हर्षराज एवं अर्चना के शुभ विवाह के मांगलिक अवसर पर",
     },
-    sceneDates: { en: "19 – 26 November 2026 · Bhind", hi: "19 – 26 नवंबर 2026 · भिंड" },
+    sceneDates: { en: "Celebrations · 19 – 26 November 2026 · Bhind", hi: "मांगलिक कार्यक्रम · 19 – 26 नवंबर 2026 · भिंड" },
   },
   marquee: [
     { en: "Harshraj *&* Archana", hi: "हर्षराज *&* अर्चना" },
-    { en: "19 · 11 · 2026", hi: "19 · 11 · 2026" },
-    { en: "*Shubh* Vivah", hi: "*शुभ* विवाह" },
+    { en: "*Lagun* & *Phaldan* · 19 November", hi: "*लगुन व फलदान* · 19 नवंबर" },
+    { en: "*Shubh Vivah* · 25 November", hi: "*शुभ विवाह* · 25 नवंबर" },
     { en: "Bhind, Madhya Pradesh", hi: "भिंड, मध्य प्रदेश" },
   ],
   invitation: {

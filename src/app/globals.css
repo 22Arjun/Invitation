@@ -734,6 +734,20 @@
     font-size: 1.2rem;
     opacity: 0.8;
   }
+  .menu__meta span {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+  }
+  :lang(hi) .menu__meta span {
+    font-family: var(--font-deva);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
 
   /* ───────────────────────── Preloader ───────────────────────── */
 
@@ -1095,9 +1109,45 @@
     text-align: center;
     color: var(--color-cream);
   }
-  .hero__date {
+  .hero__dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .hero__dates > div {
+    display: grid;
+    gap: 0.15rem;
+    padding-inline: 0.5rem;
+  }
+  .hero__dates > div + div {
+    border-left: 1px solid rgba(236, 208, 143, 0.4);
+  }
+  .hero__dates dt {
+    font-size: 0.6rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+  }
+  .hero__dates dd {
     font-family: var(--font-display);
-    font-size: clamp(1rem, calc(24 * var(--k)), 1.35rem);
+    font-size: clamp(0.95rem, calc(19 * var(--k)), 1.15rem);
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  .hero__dates dd small {
+    display: block;
+    font-size: 0.72em;
+    font-style: italic;
+    opacity: 0.75;
+  }
+  :lang(hi) .hero__dates dt,
+  :lang(hi) .hero__dates dd {
+    font-family: var(--font-deva);
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  :lang(hi) .hero__dates dt {
+    font-size: 0.9rem;
   }
   .hero__place {
     font-size: 0.66rem;
@@ -1105,7 +1155,6 @@
     text-transform: uppercase;
     opacity: 0.8;
   }
-  :lang(hi) .hero__date,
   :lang(hi) .hero__place {
     font-family: var(--font-deva);
     letter-spacing: 0.02em;
@@ -1181,14 +1230,30 @@
       text-shadow: none;
     }
     .hero__kicker {
-      top: calc(50% + (640 - var(--cy)) * var(--k));
+      top: calc(50% + (582 - var(--cy)) * var(--k));
     }
     .hero__foot {
-      width: 80vw;
+      width: calc(380 * var(--k));
       bottom: calc(50% - (930 - var(--cy)) * var(--k));
+    }
+    /* The window is narrow on phones: the two dates stack instead of sitting side by side. */
+    .hero__dates {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+    .hero__dates > div + div {
+      border-left: 0;
+      border-top: 1px solid rgba(236, 208, 143, 0.4);
+      padding-top: 0.4rem;
+    }
+    .hero__dates dd small {
+      display: none;
     }
     .hero__cue {
       margin-top: 0.4rem;
+    }
+    .hero__cue i {
+      height: 1.6rem;
     }
   }
 
@@ -2571,11 +2636,34 @@
   }
   .field input:focus + label,
   .field input:not(:placeholder-shown) + label,
+  .field input:-webkit-autofill + label,
   .field textarea:focus + label,
   .field textarea:not(:placeholder-shown) + label {
     transform: translateY(-1.45rem) scale(0.78);
     opacity: 1;
     color: var(--accent);
+  }
+
+  /*
+   * Browser autofill paints its own light-blue (Chrome) or yellow (Safari) box with dark text.
+   * Keep autofilled fields looking typed: the text colour is forced, the background change is
+   * deferred indefinitely, and an inset shadow in the panel's colour covers any browser that ignores that.
+   */
+  .field input:-webkit-autofill,
+  .field input:-webkit-autofill:hover,
+  .field input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--fg);
+    caret-color: var(--fg);
+    -webkit-box-shadow: inset 0 0 0 100px #531631;
+    box-shadow: inset 0 0 0 100px #531631;
+    transition:
+      background-color 100000s 0s,
+      color 100000s 0s,
+      border-color 0.4s;
+  }
+  .field input:autofill {
+    filter: none;
+    box-shadow: inset 0 0 0 100px #531631;
   }
   .field__opt {
     opacity: 0.6;

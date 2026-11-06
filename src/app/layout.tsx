@@ -21,7 +21,7 @@ const tiro = Tiro_Devanagari_Hindi({
 });
 
 export const metadata: Metadata = {
-  title: "Harshraj & Archana · शुभ विवाह · 19 November 2026",
+  title: "Harshraj & Archana · शुभ विवाह · 25 November 2026",
   description:
     "The Rajawat family joyfully invites you to the wedding celebrations of Harshraj & Archana — 19 to 26 November 2026, Bhind, Madhya Pradesh.",
   openGraph: {

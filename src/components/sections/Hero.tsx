@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { COUPLE, UI } from "@/content/wedding";
+import { COUPLE, KEY_EVENTS, UI } from "@/content/wedding";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { onIntro } from "@/lib/intro";
 import { useLang } from "@/lib/lang";
@@ -170,7 +170,17 @@ export function Hero() {
         </p>
 
         <div className="hero__foot">
-          <p className="hero__date">{t(UI.hero.date)}</p>
+          <dl className="hero__dates">
+            {KEY_EVENTS.map((e) => (
+              <div key={e.id}>
+                <dt>{t(e.short)}</dt>
+                <dd>
+                  {e.day} {t(e.month)}
+                  <small>{t(e.weekday)}</small>
+                </dd>
+              </div>
+            ))}
+          </dl>
           <p className="hero__place">{t(UI.hero.place)}</p>
           <a href="#invitation" className="hero__cue" data-cursor={lang === "hi" ? "स्वागतम्" : "Enter"}>
             <span>{lang === "hi" ? "प्रवेश करें" : "Scroll to enter"}</span>
