@@ -61,6 +61,17 @@ A name typed in Hindi sends a Hindi invitation and opens the site in Hindi for t
 The guest sees their name in the WhatsApp preview title, a welcome on the opening doors ("आदरणीय शर्मा जी सपरिवार · आपका हार्दिक स्वागत है"), a salutation on the invitation, and their name already filled in the RSVP.
 Forwarded links keep the original guest's name. A damaged link simply opens the normal invitation.
 
+## Hidden credit
+
+The designer credit ("Designed by Arjun Singh Bhadauriya", with a link to github.com/22Arjun) never shows unless someone knows how to ask:
+
+- **Tap** the "H & A" monogram in the top corner **7 times** quickly (phones and computers).
+- **Type `arjun`** anywhere on the page (computers; it is ignored inside form fields).
+- **Add `?credits`** to the end of any address on the site, e.g. `…/?credits` or a personal `/i/…?credits` link.
+- **Look behind the scenes:** the browser console shows a signature (with a hint about the taps), and the page source has a signature comment plus `author`/`creator` tags.
+
+The wording, secret word and tap count live in `CREDIT` in `src/content/wedding.ts`.
+
 ## Share preview (WhatsApp, etc.)
 
 The image people see when the link is shared is `src/app/opengraph-image.jpg` (1200×630).

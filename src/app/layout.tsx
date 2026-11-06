@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost, Pinyon_Script, Tiro_Devanagari_Hindi } from "next/font/google";
+import { CREDIT } from "@/content/wedding";
 import { SHARE_DESCRIPTION, shareMetadata } from "@/lib/share";
 import "./globals.css";
 
@@ -26,7 +27,11 @@ export const metadata: Metadata = {
   description:
     "The Rajawat family joyfully invites you to the wedding celebrations of Harshraj & Archana — 19 to 26 November 2026, Bhind, Madhya Pradesh.",
   ...shareMetadata("Harshraj & Archana · शुभ विवाह", SHARE_DESCRIPTION.en),
+  authors: [{ name: CREDIT.name, url: CREDIT.github }],
+  creator: CREDIT.name,
 };
+
+const SOURCE_SIGNATURE = `<!-- ✦ ${CREDIT.by} ${CREDIT.name} · ${CREDIT.github} ✦ -->`;
 
 export const viewport: Viewport = {
   themeColor: "#fbf4e8",
@@ -38,7 +43,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${cormorant.variable} ${jost.variable} ${pinyon.variable} ${tiro.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* A signature for anyone who reads the page source. */}
+        <div hidden dangerouslySetInnerHTML={{ __html: SOURCE_SIGNATURE }} />
+        {children}
+      </body>
     </html>
   );
 }

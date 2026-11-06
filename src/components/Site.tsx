@@ -1,5 +1,6 @@
 import type { Guest } from "@/lib/guest";
 import { GuestProvider } from "@/lib/guest-context";
+import { Credits } from "@/components/chrome/Credits";
 import { Cursor } from "@/components/chrome/Cursor";
 import { MobileDock } from "@/components/chrome/MobileDock";
 import { Nav } from "@/components/chrome/Nav";
@@ -49,6 +50,7 @@ export function Site({ guest = null }: { guest?: Guest | null }) {
       <Footer />
       {/* Decorative fixed layers sit after the content so they never force it onto extra GPU layers. */}
       <MobileDock />
+      <Credits />
       <ScrollProgress />
       <Cursor />
       {/* Created last so every pinned section above is measured first. */}

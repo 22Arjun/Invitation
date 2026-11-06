@@ -258,6 +258,15 @@ export const BAL_MANUHAR = {
   kids: { en: "Sachi, Jayvardhan & Ramya", hi: "सचि, जयवर्धन, रम्या" },
 };
 
+/** The hidden designer credit. See components/chrome/Credits.tsx for the ways to reveal it. */
+export const CREDIT = {
+  by: "Designed by",
+  name: "Arjun Singh Bhadauriya",
+  github: "https://github.com/22Arjun",
+  secretWord: "arjun",
+  taps: 7,
+};
+
 export const CONTACTS = ["74156-40052", "98263-33210", "90397-35199", "93400-43077"];
 
 /** RSVPs open a WhatsApp chat with this number: 94066-44404, with India's +91 prefix and no spaces. */
